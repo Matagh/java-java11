@@ -53,7 +53,7 @@ public class Stream_05_Test {
     // TODO utiliser la méthode Stream.iterate
     // TODO transformer en stream parallel (.parallel())
     private long parallelIterateSum(long n) {
-        return Stream.iterate(0L, i -> i+1).limit(n).reduce(0L, Long::sum);
+        return Stream.iterate(0L, i -> i+1).limit(n).parallel().reduce(0L, Long::sum);
     }
 
     // TODO exécuter le test pour vérifier que les méthodes imperativeSum, iterateSum et parallelIterateSum produisent le même résultat
@@ -91,9 +91,9 @@ public class Stream_05_Test {
     // TODO visualiser les temps d'exécution
     @Test
     public void monitor_imperativeSum_vs_iterateSum_vs_parallelIterateSum() {
-        Logger.getAnonymousLogger().info("imperativeSum => " + /* TODO */" ms");
-        Logger.getAnonymousLogger().info("iterateSum => " + /* TODO */" ms");
-        Logger.getAnonymousLogger().info("parallelIterateSum => " + /* TODO */ " ms");
+        Logger.getAnonymousLogger().info("imperativeSum => " + monitor(n -> {imperativeSum(NB);}, NB) + " ms");
+        Logger.getAnonymousLogger().info("iterateSum => " + monitor(n -> {iterateSum(NB);}, NB) + " ms");
+        Logger.getAnonymousLogger().info("parallelIterateSum => " + monitor(n -> {parallelIterateSum(NB);}, NB) + " ms");
     }
 
     // Quel résultat obtenez-vous ?
@@ -107,7 +107,7 @@ public class Stream_05_Test {
     // TODO compléter la méthode rangeSum
     // TODO utiliser la méthode LongStream.rangeClosed
     private long rangeSum(long n) {
-        return 0;
+        return LongStream.rangeClosed(0L, n-1).reduce(0L, Long::sum);
     }
 
     // TODO vérifier que l'implémentation de rangeSum
@@ -126,7 +126,8 @@ public class Stream_05_Test {
     // TODO utiliser la méthode LongStream.rangeClosed
     // TODO transformer en stream parallel (.parallel())
     private long rangeParallelSum(long n) {
-        return 0;
+        return LongStream.rangeClosed(0L, n-1).parallel().reduce(0L, Long::sum);
+
     }
 
     // TODO vérifier que l'implémentation de rangeParallelSum
@@ -145,11 +146,11 @@ public class Stream_05_Test {
 
     @Test
     public void monitor_imperativeSum_vs_iterateSum_vs_parallelIterateSum_vs_rangeSum_vs_rangeParallelSum() {
-        Logger.getAnonymousLogger().info("imperativeSum => " + /* TODO */ " ms");
-        Logger.getAnonymousLogger().info("iterateSum => " + /* TODO */ " ms");
-        Logger.getAnonymousLogger().info("parallelIterateSum => " + /* TODO */ " ms");
-        Logger.getAnonymousLogger().info("rangeSum => " + /* TODO */" ms");
-        Logger.getAnonymousLogger().info("rangeParallelSum => " /* TODO */ + " ms");
+        Logger.getAnonymousLogger().info("imperativeSum => " +  monitor(n -> {imperativeSum(NB);}, NB) + " ms");
+        Logger.getAnonymousLogger().info("iterateSum => " + monitor(n -> {iterateSum(NB);}, NB) + " ms");
+        Logger.getAnonymousLogger().info("parallelIterateSum => " + monitor(n -> {parallelIterateSum(NB);}, NB) + " ms");
+        Logger.getAnonymousLogger().info("rangeSum => " + monitor(n -> {rangeSum(NB);}, NB) + " ms");
+        Logger.getAnonymousLogger().info("rangeParallelSum => " + monitor(n -> {rangeParallelSum(NB);}, NB) + " ms");
     }
 
     // Quel résultat obtenez-vous ?
